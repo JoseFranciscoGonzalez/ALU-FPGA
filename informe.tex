@@ -1,0 +1,454 @@
+
+\documentclass[a4paper, 10pt, spanish]{article}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\usepackage{color}
+\definecolor{cadet}{rgb}{0.33, 0.41, 0.47}
+\definecolor{orange}{rgb}{0.93, 0.53, 0.18}
+\definecolor{carminered}{rgb}{1.0, 0.0, 0.22}
+\definecolor{green}{rgb}{0.33, 0.42, 0.18}
+\definecolor{darkmagenta}{rgb}{0.55, 0.0, 0.55}
+\usepackage{anysize}
+\usepackage{biblatex}
+\usepackage{float}
+\usepackage{array} % 1
+\usepackage{graphicx}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{courier}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{SIunits}
+\usepackage{listings}
+\usepackage{pgfplots,filecontents}
+\pgfplotsset{compat=1.7}
+\usepackage[siunitx]{circuitikz}
+\usepackage{subcaption}
+
+\usepackage{asmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONFIGURACIONES GENERALES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definición del tamaño de página y los márgenes:
+% Si preferís menos márgenes, descomentá la línea siguiente
+%\usepackage[a4paper,headheight=16pt,scale={0.7,0.8},hoffset=0.5cm]{geometry}
+\usepackage{listings}
+\lstset{ frame=Ltb,
+     framerule=0pt,
+     aboveskip=0.5cm,
+     framextopmargin=3pt,
+     framexbottommargin=3pt,
+     framexleftmargin=0.4cm,
+     framesep=0pt,
+     rulesep=.4pt,
+     backgroundcolor=,
+     rulesepcolor=\color{cadet},
+     %
+     stringstyle=\ttfamily\color{cadet}, %ttfamily
+     showstringspaces = false,
+     basicstyle=\small\ttfamily,    %ttfamily
+     commentstyle=\itshape\color{cadet},
+     keywordstyle=\small\ttfamily\color{cadet},
+     identifierstyle=,
+     %        
+     numbers=left,
+     numbersep=15pt,
+     numberstyle=\tiny,
+     numberfirstline = false,
+     breaklines=true,
+     inputencoding=utf8,
+     extendedchars=true,
+    literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1,
+   }
+
+\usepackage{babel}  % contiene la correcta separación en sílabas del español
+\usepackage[utf8x]{inputenc}    % porque el encoding del documento es UTF-8
+
+\usepackage[mode=buildnew]{standalone}% requires -shell-escape
+\usepackage{tikz}
+
+\usepackage{calc}
+
+
+\usepackage{floatrow}
+%
+% El paquete amsmath agrega algunas funcionalidades extra a las fórmulas.
+% Además defino la numeración de las tablas y figuras al estilo "Figura 2.3",
+% en lugar de "Figura 7". (Por lo tanto, aunque no uses fórmulas, si querés
+% este tipo de numeración dejá el paquete amsmath descomentado).
+%
+\usepackage{amsmath, amsfonts, amssymb}
+\numberwithin{equation}{section}
+%\numberwithin{figure}{section}
+\numberwithin{table}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ENCABEZADO y PIE DE PÁGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}   % Para poder personalizarlo
+\usepackage{lastpage}   % Para poder saber cuántas páginas tiene el documento
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markboth{}{\thesection\ \ #1}}
+\fancyhead{}	% Elimino el contenido del encabezado
+% El siguiente texto a la derecha (izquierda) en páginas pares (impares)
+\fancyhead[RE,LO]{66.17 - Sistemas Digitales - Trabajo práctico N\textsuperscript{o}1}
+\fancyhead[R]{FIUBA}
+
+\fancyfoot{}	% Elimino el contenido del pie de página
+% A la izquierda (derecha) en páginas pares (impares): nro. de página / total
+\fancyfoot[LE,RO]{\thepage/\pageref{LastPage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hipervínculos (enlaces) en el documento (y modificación de atributos)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{caption}
+\captionsetup[table]{belowskip=0.5cm}
+
+\usepackage{subfigure}
+\usepackage{url}
+\urlstyle{tt}
+\usepackage[colorlinks=true,linkcolor=black, urlcolor=blue]{hyperref}
+\hypersetup{
+    breaklinks,
+    baseurl       = http://,
+    pdfborder     = 0 0 0,
+    pdfpagemode   = UseNone,
+    pdfstartpage  = 1,
+    pdfcreator    = {Plantilla de informe de TP para \LaTeX{}},
+    bookmarksopen = true,
+    bookmarksdepth= 2,% to show sections and subsections
+    pdfauthor     = {González},
+    pdftitle      = {Sistemas Digitales - Tp 1},
+    pdfsubject    = {Informe},
+    pdfkeywords   = {}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LISTAS (para poder modificar los 'bullets' de las listas)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLAS (para que se vean bien)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{booktabs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% IMÁGENES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Para incluir imágenes, el siguiente código carga el paquete graphicx
+% según se esté generando un archivo dvi o un pdf (con pdflatex).
+
+% Para generar dvi, descomentá la linea siguiente:
+%\usepackage[dvips]{graphicx}
+
+% Para generar pdf, descomentá las dos lineas seguientes:
+\usepackage{graphicx}
+\pdfcompresslevel=9
+
+% Todas las imágenes están en el directorio imgs:
+\newcommand{\imgdir}{imgs}
+\graphicspath{{\imgdir/}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\usepackage{blindtext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMANDOS UTILES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% los siguientes comandos permiten escribir de manera uniforme en todo el
+% documento
+
+% Para poder manejar los espacios al final de los comandos propios
+\usepackage{xspace}
+
+\usepackage{bytefield}
+
+% Abreviatura de 'número' utilizando letras voladas (correcto español)
+\newcommand{\Nro}{N.\textsuperscript{o}\xspace}
+\newcommand{\nro}{n.\textsuperscript{o}\xspace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INICIO DEL DOCUMENTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\mymeter}[2] 
+{  % #1 = name , #2 = rotation angle
+\begin{scope}[transform shape,rotate=#2]
+\draw[thick] (#1)node(){$\mathbf V$} circle (11pt);
+\draw[rotate=45,-latex] (#1)  +(-17pt,0) --+(17pt,0);
+\end{scope}
+}
+
+\usepackage[font=small,labelfont=bf,tableposition=top]{caption}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+
+\tikzset{%
+    block/.style={draw, fill=white, rectangle, 
+            minimum height=2em, minimum width=3em},
+    input/.style={inner sep=0pt},       
+    output/.style={inner sep=0pt},      
+    sum/.style = {draw, fill=white, circle, minimum size=2mm, node distance=1.5cm, inner sep=0pt},
+    pinstyle/.style = {pin edge={to-,thin,black}}
+}
+
+
+\marginsize{2cm}{2cm}{2cm}{2cm}
+
+%
+% Hago que las páginas se comiencen a contar a partir de aquí:
+%
+\setcounter{page}{1}
+
+%
+% Pongo el índice en una página aparte:
+%
+
+
+%
+% Inicio del TP:
+%
+\thispagestyle{empty}
+
+\begin{center}
+{\LARGE{\bfseries Trabajo Práctico N\textsuperscript{o}1}}\\
+{\LARGE{\bfseries Aritmética de punto flotante}}\\
+{\large{\bfseries 66.17 Sistemas Digitales - FIUBA}}\\
+{\large{\bfseries 2\textsuperscript{do} Cuatrimestre - 2018}}
+\end{center}
+
+\hspace
+
+\begin{center}
+{\large{\textfont{José F. González - 100063 - \footnotesize{\verb!<jfgonzalez@fi.uba.ar>!}}}}\\
+\end{center}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Objetivos}
+El objetivo de este trabajo práctico consiste en implementar la operación de multiplicación de una unidad de punto flotante en lenguaje descriptor de hardware VHDL.
+
+\section{Diseño de Unidad de Multiplicación}  
+\begin{figure}[h!]
+\begin{center}
+\newcommand{\colorbitbox}[3]{%
+\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
+\bitbox{#2}{#3}}
+\definecolor{lightcyan}{rgb}{0.84,1,1}
+\definecolor{lightgreen}{rgb}{0.64,1,0.71}
+\definecolor{lightred}{rgb}{1,0.7,0.71}
+\begin{bytefield}[bitheight=\widthof{~Signo~},
+boxformatting={\centering\small}]{32}
+\bitheader[endianness=big]{31,22,0} \\
+\colorbitbox{lightcyan}{1}{\rotatebox{90}{Signo}} &
+\colorbitbox{lightgreen}{8}{Exponente} &
+\colorbitbox{lightred}{23}{Mantissa}
+\end{bytefield}
+\end{center}
+\caption{Representación de simple precisión en punto flotante}
+\end{figure}
+
+Un número puede ser representado en formato de punto flotante mediante un signo, una precisión $p$, una base $b$ y un exponente $e$. De forma tal que la mutiplicación de dos numéros se reduce a:
+
+\begin{equation}
+(\pm a.aaa \cdots a \times b^{e_a}) \cdot (\pm b.bbb \cdots n \times b^{e_b}) = \pm (a.aaa \cdots a \times b.bbb \cdots b) \times b^{e_a + e_b}
+\end{equation}  
+
+
+El estándar IEEE 754 nos da un formato de representación de números reales en punto flotante de base dos, en el cuál se usa un bit de signo, seguido de $\epsilon$ bits del exponente y una mantissa de $m$ bits de precisión, tal cómo se indica en la figura 1. Luego podemos implementar la multiplicación en VHDL tomando dos números de $e+m+1$ bits y recreando la ecuación (2.1).
+
+\subsection{Exponente}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{bytefield}{9}
+\bitheader[endianness=big]{8,7,0} \\
+\begin{rightwordgroup}{Exponentes}
+\bitbox{1}{0} & \bitbox{8}{exp\_a} \\
+\bitbox{1}{0} & \bitbox{8}{exp\_b} 
+\end{rightwordgroup}\\
+\begin{rightwordgroup}{Suma con doble BIAS}
+\bitbox{1}{}  & \bitbox{8}{double\_bias} 
+\end{rightwordgroup}\\
+\begin{rightwordgroup}{BIAS}
+\bitbox{1}{0}  & \bitbox{8}{1111111} 
+\end{rightwordgroup}\\
+\begin{rightwordgroup}{Suma}
+\bitbox{1}{\rule{\width}{\height}}  & \bitbox{8}{exp\_c} 
+\end{rightwordgroup}\\
+\end{bytefield}
+\caption{Manejo del exponente}
+\end{center}
+\end{figure}
+
+El exponente se almacena como un valor sin signo con un \textit{BIAS} de valor $2^{n-1}-1$ para facilitar la comparación de exponentes. Luego según (2.1) el exponente será la suma de los exponentes, operación que implementamos en binario con un sumador de $\epsilon + 1$ bits. El bit adicional tiene la función de guardar un valor de exponente que incluye un \textit{BIAS} doble, que restamos utilizando un restador de $\epsilon + 1$ bits como se muestra en la figura 2 para el caso de un exponente de 8bits. Este resultado se compara con los límites de \textit{under/overflow} que serán fuera del rango $[1,2^{e}-1]$, si el exponente es menor a $1$ el resultado se aproxima a cero y si es mayor al límite máximo se lo guarda como $2^e-1$ reservado para mayor número normalizado. Si está dentro del rango de representación se guarda los primeros \epsilon\ bits. 
+
+\newpage
+\subsection{Mantissa}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{bytefield}{24}
+\bitheader[endianness=big]{23,22,0} \\
+\begin{leftwordgroup}{Bits implícitos}
+\bitbox{1}{1} & \bitbox{23}{mant\_a} \\
+\bitbox{1}{1} & \bitbox{23}{mant\_b} 
+\end{leftwordgroup}\\
+\end{bytefield}
+
+\newcommand{\fakesixtyfourbits}[1]{%
+\tiny
+\ifnum#1=1234567890
+#1
+\else
+\ifnum#1>9
+\count22=#1
+\advance\count22 by 24
+\the\count22%
+\else
+\ifnum#1<4
+#1%
+\else
+\ifnum#1=6
+$\cdots$%
+\fi
+\fi
+\fi
+\fi
+}
+\begin{bytefield}[%
+%bitwidth=\widthof{\tiny Fwd~},
+bitformatting=\fakesixtyfourbits,
+endianness=big]{24}
+\bitheader{0-23} \\
+\begin{leftwordgroup}{\hspace{0.75cm} Producto}
+\bitbox{1}{ } & \bitbox{1}{} & \bitbox{22}{mant\_c}
+\end{leftwordgroup}\\
+\end{bytefield}
+\end{center}
+\caption{Manejo de la mantissa}
+\end{figure}
+
+El producto de mantissas se implementa en VHDL como un producto de enteros sin signo, siendo el resultado almacenado en $2\cdot(m+1)$ bits como se indica en la figura 3 para $m = 23$. Donde se debe tener en cuenta el \textit{bit oculto} dado por la normalización de la mantissa del estándar IEEE 754 donde el bit más significativo será siempre un 1. Finalmente el resultado se debe truncar y normalizar. Se implementa una descripción funcional donde dependiendo de los dos primeros dígitos se realiza un corrimiento de bits o un corrimiento de coma con un ajuste del exponente.
+
+\subsection{Signo}
+El signo del producto será computado simplemente por una descripción funcional de una compuerta EX-OR para los casos generales, llevando execpciones a 0 o 1 según corresponda.
+
+\vspace{3cm}
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=0.85]{tikz.pdf}
+\end{center}
+\caption{Diagrama de bloques unidad de multiplicación}
+\end{figure}
+
+\newpage
+\section{Simulación}
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=1]{tikz2.pdf}
+\end{center}
+\caption{Diagrama de la simulación}
+\end{figure}
+Se implementó un banco de pruebas alimentado por archivos con vectores que contienen valores de prueba con sus respectivos resultado para comparación, si la comparación presenta un error se aumenta un contador de errores. En la figura 6 se muestra un ejemplo del resultado de ejecución de la simulación para el archivo \textbf{"test\_mul\_float\_26\_7.txt"}, donde se aprecia la ejecución sin errores de la FPU. El proyecto por defecto tiene cargado el archivo \textbf{test\_mul\_float\_24\_6.txt} para simular, para ejecutar simulaciones de otros archivos se debe modificar, en el archivo \textbf{testbench.vhd}, el nombre del archivo que se desea y cambiar las constantes \textbf{WORD\_SIZE\_T}, \textbf{MANTISSA\_SIZE\_T}, \textbf{EXP\_SIZE\_T} por los correspondientes al nuevo archivo. Por ejemplo,el archivo 26\_7 lleva 26, 18 y 7 respectivamente.
+ 
+\vspace{2cm}
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=0.4]{capt1.png}
+\end{center}
+\caption{Ejemplo de la simulación para el archivo \textbf{26\_7}}
+\end{figure}
+
+\newpage
+\section{Diseño de Unidad de Suma}
+Se implementa el algoritmo representado por el diagrama de bloques de la figura 1. Las consideraciones de simulación son las mismas que en el caso de la multiplicación.
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=0.4]{Diagrama1.png}
+\end{center}
+\caption{Diagrama de bloques unidad de suma}
+
+\end{figure}
+\section{Síntesis}
+En los archivos \textbf{fp\_mult\_utilization\_synth.rpt} se adjuntan los resultados de la síntesis en Vivado (para cada formato el circuito difiere) para una placa Arty Z7. En la figura 7 se detallan la cantidad de Slices, Flip-Flops y LUT's utilizados para el formato 26\_7. Notar que no se usan registros como Flip-Flops pues el circuito es puramente combinacional. Para correr la síntesis en Vivado del circuito sin que tenga en cuenta la etapa de simulación se debe colocar al archivo \textbf{fp\_mult.vhd} con maxíma jerarquía: \textbf{set as top}. Los valores por defecto de síntesis e implementación son del formato 26\_7.
+
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=0.6]{capt2.png}
+\end{center}
+\caption{Slice Logic de multiplicación del formato \textbf{26\_7} para una placa Arty Z7.}
+\end{figure}
+
+%\begin{figure}[h!]
+%\begin{center}
+%    \hspace{2cm}
+%    \includegraphics[scale=0.4]{capt5.png}
+%\end{center}
+%\caption{Estimación de recursos para la placa Arty Z7.}
+%\end{figure}
+
+\section{Implementaciónes}
+Se implementa el sistema sintetizado para una placa Arty Z7 con las opciones por defecto de Vivado. En el archivo \textbf{impl\_1\_place\_report\_utilization\_0} se adjunta el reporte de utilización de recursos.
+
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=0.6]{capt4.png}
+\end{center}
+\caption{Slice Logic de la implementación de multiplicación del formato \textbf{26\_7} para una placa Arty Z7.}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+    \hspace{2cm}
+    \includegraphics[scale=0.4]{capt6.png}
+\end{center}
+\caption{Uso de recursos para la multiplicación en placa Arty Z7.}
+\end{figure}
+
+\newpage
+\section{Conclusión}
+Se logró implementar el sistema digital diseñado en VHDL comprobando su correcto funcionamiento mediante las herramientas de Vivado, logrando un primer acercamiento a los lenguajes descriptores de hardware y a su entorno de desarrollo en el contexto de la aritmética de punto flotante.
+
+\section{Referencias}
+\begin{enumerate}[{[}1{]}]
+  \item  Computer Arithmetic, David Goldberg, 2003, Elsevier Science US.
+  \item  Material de Cátedra, Sistemas Digitales, FIUBA.
+\end{enumerate}
+
+
+\end{document}
